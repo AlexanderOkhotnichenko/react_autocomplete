@@ -40,10 +40,16 @@ export const Autocomplete: React.FC<Props> = ({
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
+    const trimmed = value.trim();
 
     setSearch(value);
     onSelected(null);
-    applySearch(value.trim());
+
+    if (trimmed) {
+      applySearch(trimmed);
+    } else if (value === '') {
+      applySearch('');
+    }
   };
 
   const handleSelect = (person: Person) => {
