@@ -39,9 +39,11 @@ export const Autocomplete: React.FC<Props> = ({
   );
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
-    applySearch(event.target.value);
+    const { value } = event.target;
+
+    setSearch(value);
     onSelected(null);
+    applySearch(value.trim());
   };
 
   const handleSelect = (person: Person) => {
@@ -70,13 +72,8 @@ export const Autocomplete: React.FC<Props> = ({
         <div className="dropdown-content">
           {filtered.length === 0 ? (
             <div
-              className="
-            notification
-            is-danger
-            is-light
-            mt-3
-            is-align-self-flex-start
-          "
+              className="notification is-danger is-light mt-3
+              is-align-self-flex-start"
               role="alert"
               data-cy="no-suggestions-message"
             >
@@ -87,7 +84,7 @@ export const Autocomplete: React.FC<Props> = ({
               <div
                 className="dropdown-item"
                 data-cy="suggestion-item"
-                key={person.name}
+                key={person.slug}
                 onMouseDown={() => handleSelect(person)}
               >
                 <p className="has-text-link">{person.name}</p>
